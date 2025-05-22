@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect, useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 const Dashboard = async () => {
   const supabase = await createClient()
