@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect, useRouter } from "next/navigation";
+import { LogoutButton } from "../(auth)/_components/logout-button";
 
 const Dashboard = async () => {
   const supabase = await createClient()
@@ -10,7 +11,8 @@ const Dashboard = async () => {
 
   return (
     <div>
-      <h1>Welcome, {data.user.email}!</h1>
+      <h1>Welcome, {data.user.user_metadata.name}!</h1>
+      <LogoutButton />
     </div>
   )
 };

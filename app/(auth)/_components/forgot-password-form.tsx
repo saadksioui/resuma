@@ -1,10 +1,7 @@
 'use client'
 
-import { cn } from '@/lib/utils'
 import { createClient } from '@/utils/supabase/client'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { useState } from 'react'
 import { FileText, Mail } from 'lucide-react'
 
@@ -23,7 +20,7 @@ export function ForgotPasswordForm() {
     try {
       // The url which will be included in the email. This URL needs to be configured in your redirect URLs in the Supabase dashboard at https://supabase.com/dashboard/project/_/auth/url-configuration
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/update-password`,
+        redirectTo: `${window.location.origin}/update-password`,
       })
       if (error) throw error
       setSuccess(true)
@@ -35,7 +32,7 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {success ? (
         <Card>
           <CardHeader>
@@ -62,7 +59,7 @@ export function ForgotPasswordForm() {
           </div>
 
           <form className="mt-8 space-y-6" onSubmit={handleForgotPassword}>
-            <div className="rounded-md shadow-sm space-y-4">
+            <div className="rounded-md space-y-4">
               <div>
                 <label htmlFor="email" className="sr-only">
                   Email address
