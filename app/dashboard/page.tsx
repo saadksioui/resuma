@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { LogoutButton } from "../../(auth)/_components/logout-button";
+import { LogoutButton } from "../(auth)/_components/logout-button";
 
 const Dashboard = async () => {
   const supabase = await createClient()
@@ -11,6 +11,7 @@ const Dashboard = async () => {
 
   return (
     <div>
+      <h1 className="text-4xl font-bold">Dashboard</h1>
     </div>
   )
 };
