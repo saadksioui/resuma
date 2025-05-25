@@ -1,17 +1,13 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
+import Header from "./_components/Header";
 
 const Home = () => {
 
   return (
     <div>
+      <Header />
       Home
-      <Button>
-        <Link href="/login">Login</Link>
-      </Button>
-      <Button>
-        <Link href="/sign-up">Register</Link>
-      </Button>
+
     </div>
   )
 };
