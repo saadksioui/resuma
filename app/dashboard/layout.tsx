@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Navbar from "./_components/Navbar";
+import { ResumeProvider } from "@/context/ResumeContext";
 
 const DashboardLayout = ({
   children,
@@ -7,7 +8,8 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <ResumeProvider>
+<div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
       <main className="flex-grow">
         {children}
@@ -23,6 +25,7 @@ const DashboardLayout = ({
         </div>
       </footer>
     </div>
+    </ResumeProvider>
   )
 };
 
