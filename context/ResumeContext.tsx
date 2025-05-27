@@ -31,6 +31,9 @@ const defaultResumeData: ResumeData = {
   fullName: "",
   title: "",
   bio: "",
+  email: "",
+  phone: "",
+  city: "",
   skills: [],
   createdAt: "",
   updatedAt: "",
@@ -54,9 +57,13 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const fetchResume = async () => {
       const {
         data: { user },
+        error: userError,
       } = await supabase.auth.getUser();
 
-      if (!user) return;
+      if (userError || !user) {
+        console.error("User not found or auth error:", userError);
+        return;
+      }
 
       const { data, error } = await supabase
         .from("resumes")
@@ -69,8 +76,16 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         return;
       }
 
+      if (!data) {
+        console.warn("No resume data found for this user.");
+        return;
+      }
+
       setResumeData({
         ...data,
+        email: user?.email,
+        phone: data.phone || "",
+        city: data.city || "",
         experience: data.experience || [],
         education: data.education || [],
         socialLinks: data.social_links || [],
@@ -87,6 +102,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       ...prev,
       [field]: value,
     }));
+
   };
 
   const updateSkills = (skills: string[]) => {

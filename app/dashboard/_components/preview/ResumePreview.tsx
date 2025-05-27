@@ -55,15 +55,15 @@ const ResumePreview: React.FC = () => {
             <div className="mt-4 flex flex-wrap gap-2">
               <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
                 <Mail className="h-3 w-3 mr-1" />
-                <span>email@example.com</span>
+                <span>{resumeData.email}</span>
               </div>
               <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
                 <Phone className="h-3 w-3 mr-1" />
-                <span>(123) 456-7890</span>
+                <span>{resumeData.phone}</span>
               </div>
               <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
                 <MapPin className="h-3 w-3 mr-1" />
-                <span>City, State</span>
+                <span>{resumeData.city}</span>
               </div>
             </div>
           </div>

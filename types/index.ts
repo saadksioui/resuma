@@ -32,6 +32,9 @@ export interface ResumeData {
   fullName: string;
   title: string;
   bio: string;
+  email: string;
+  phone: string;
+  city: string;
   skills: string[];
   createdAt: string;
   updatedAt: string;
