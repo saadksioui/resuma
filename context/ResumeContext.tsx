@@ -22,6 +22,7 @@ interface ResumeContextType {
   updateSocialLink: (id: string, field: string, value: string) => void;
   removeSocialLink: (id: string) => void;
   toggleTheme: () => void;
+  saveResume: () => Promise<void>;
 }
 
 const defaultResumeData: ResumeData = {
@@ -54,6 +55,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const supabase = createClient();
 
   useEffect(() => {
+
     const fetchResume = async () => {
       const {
         data: { user },
@@ -64,6 +66,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         console.error("User not found or auth error:", userError);
         return;
       }
+
 
       const { data, error } = await supabase
         .from("resumes")
@@ -77,25 +80,38 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       }
 
       if (!data) {
-        console.warn("No resume data found for this user.");
+        const newId = uuidv4();
+        const slug = user.user_metadata.full_name?.toLowerCase().replace(/\s+/g, "-") || "my-resume";
+
+        const newResume = {
+          ...defaultResumeData,
+          id: newId,
+          userId: user.id,
+          slug,
+          fullName: user.user_metadata.full_name || "",
+          email: user.email || "",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        setResumeData(newResume);
+        setPublicLink(`https://resuma.me/${slug}`);
         return;
       }
 
       setResumeData({
         ...data,
-        email: user?.email,
-        phone: data.phone || "",
-        city: data.city || "",
+        email: data.email || user?.email || "",
         experience: data.experience || [],
         education: data.education || [],
         socialLinks: data.social_links || [],
       });
 
-      setPublicLink(`https://onelinkresu.me/${data.slug}`);
+      setPublicLink(`https://resuma.me/${data.slug}`);
     };
 
     fetchResume();
-  }, [supabase]);
+  }, []);
 
   const updatePersonalInfo = (field: string, value: string) => {
     setResumeData((prev) => ({
@@ -215,6 +231,68 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
+  const saveResume = async () => {
+    const {
+      id, userId, fullName, title, bio, email, phone, city, skills, experience, education, socialLinks
+    } = resumeData
+
+    try {
+      const { error: resumeError } = await supabase
+        .from("resumes")
+        .upsert({
+          id,
+          user_id: userId,
+          slug: fullName?.trim().toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || uuidv4(),
+          full_name: fullName,
+          title,
+          bio,
+          email,
+          phone,
+          city,
+          skills: JSON.stringify(skills),
+          updated_at: new Date().toISOString(),
+        })
+
+      if (resumeError) throw resumeError
+
+      await supabase.from("experience").delete().eq("resume_id", id)
+      await supabase.from("education").delete().eq("resume_id", id)
+      await supabase.from("social_links").delete().eq("resume_id", id)
+
+      if (experience.length > 0) {
+        const { error: expError } = await supabase.from("experience").insert(experience.map((exp) => ({
+          ...exp,
+          resume_id: id
+        })))
+
+        if (expError) throw expError;
+      }
+
+      if (education.length > 0) {
+        const { error: eduError } = await supabase.from("education").insert(education.map((edu) => ({
+          ...edu,
+          resume_id: id
+        })))
+
+        if (eduError) throw eduError;
+      }
+
+      if (socialLinks.length > 0) {
+        const { error: socErr } = await supabase
+          .from("social_links")
+          .insert(socialLinks.map((s) => ({ ...s, resume_id: id })));
+        if (socErr) throw socErr;
+      }
+
+      alert("✅ Resume saved successfully!");
+    } catch (error) {
+
+      console.error("❌ Error saving resume:", error);
+      alert("❌ Failed to save resume. Check console for errors.");
+    }
+
+  }
+
   return (
     <ResumeContext.Provider
       value={{
@@ -233,6 +311,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         updateSocialLink,
         removeSocialLink,
         toggleTheme,
+        saveResume: saveResume
       }}
     >
       {children}

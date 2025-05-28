@@ -45,6 +45,36 @@ const PersonalInfoSection = () => {
         </div>
 
         <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number
+          </label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={resumeData.phone}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="(123) 456-7890"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+            Adress
+          </label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={resumeData.city}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="New York, USA"
+          />
+        </div>
+
+        <div>
           <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-1">
             Professional Bio
           </label>
