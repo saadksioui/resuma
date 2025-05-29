@@ -22,7 +22,7 @@ const PersonalInfoSection = () => {
             type="text"
             id="fullName"
             name="fullName"
-            value={resumeData.fullName}
+            value={resumeData.full_name || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="John Doe"
@@ -37,7 +37,7 @@ const PersonalInfoSection = () => {
             type="text"
             id="title"
             name="title"
-            value={resumeData.title}
+            value={resumeData.title || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Web Developer"
@@ -52,7 +52,7 @@ const PersonalInfoSection = () => {
             type="text"
             id="phone"
             name="phone"
-            value={resumeData.phone}
+            value={resumeData.phone || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="(123) 456-7890"
@@ -61,13 +61,13 @@ const PersonalInfoSection = () => {
 
         <div>
           <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-            Adress
+            Address
           </label>
           <input
             type="text"
             id="city"
             name="city"
-            value={resumeData.city}
+            value={resumeData.city || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="New York, USA"
@@ -82,7 +82,7 @@ const PersonalInfoSection = () => {
             id="bio"
             name="bio"
             rows={4}
-            value={resumeData.bio}
+            value={resumeData.bio || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="A brief description about yourself..."
@@ -90,7 +90,7 @@ const PersonalInfoSection = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
-export default PersonalInfoSection
+export default PersonalInfoSection;

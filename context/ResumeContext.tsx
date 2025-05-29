@@ -1,4 +1,5 @@
 "use client"
+import { formatMonthToDate } from "@/lib/functions";
 import { ResumeData, ResumeTheme } from "@/types";
 import { createClient } from "@/utils/supabase/client";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -29,7 +30,7 @@ const defaultResumeData: ResumeData = {
   id: "",
   userId: "",
   slug: "",
-  fullName: "",
+  full_name: "",
   title: "",
   bio: "",
   email: "",
@@ -62,8 +63,8 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         error: userError,
       } = await supabase.auth.getUser();
 
-      if (userError || !user) {
-        console.error("User not found or auth error:", userError);
+      if (!user || userError) {
+        console.error("❌ User not found or auth error:", userError?.message || userError);
         return;
       }
 
@@ -75,20 +76,19 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         .single();
 
       if (error) {
-        console.error("Error fetching resume:", error);
+        console.error("❌ Error fetching resume:", error.message || error);
         return;
       }
 
       if (!data) {
         const newId = uuidv4();
-        const slug = user.user_metadata.full_name?.toLowerCase().replace(/\s+/g, "-") || "my-resume";
+        const slug = user.user_metadata.name?.toLowerCase().replace(/\s+/g, "-") || "my-resume";
 
         const newResume = {
           ...defaultResumeData,
           id: newId,
           userId: user.id,
           slug,
-          fullName: user.user_metadata.full_name || "",
           email: user.email || "",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
@@ -227,29 +227,57 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }));
   };
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("resume-theme");
+    if (savedTheme === "dark" || savedTheme === "light") {
+      setTheme(savedTheme);
+    }
+  }, []);
+
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme((prev) => {
+      const newTheme = prev === "light" ? "dark" : "light";
+      localStorage.setItem("resume-theme", newTheme);
+      return newTheme;
+    });
   };
 
   const saveResume = async () => {
-    const {
-      id, userId, fullName, title, bio, email, phone, city, skills, experience, education, socialLinks
+    let {
+      id, userId, full_name, title, bio, email, phone, city, skills, experience, education, socialLinks
     } = resumeData
+
+    if (!id) id = uuidv4();
+    if (!userId) {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        console.error("❌ User not found while saving:", userError?.message || userError);
+        alert("❌ Failed to save resume. User not authenticated.");
+        return;
+      }
+
+      userId = user.id;
+    }
+
 
     try {
       const { error: resumeError } = await supabase
         .from("resumes")
         .upsert({
-          id,
+          id: resumeData.id || uuidv4(),
           user_id: userId,
-          slug: fullName?.trim().toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || uuidv4(),
-          full_name: fullName,
+          slug: full_name?.trim().toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || uuidv4(),
+          full_name: full_name,
           title,
           bio,
           email,
           phone,
           city,
-          skills: JSON.stringify(skills),
+          skills: skills,
           updated_at: new Date().toISOString(),
         })
 
@@ -260,34 +288,55 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       await supabase.from("social_links").delete().eq("resume_id", id)
 
       if (experience.length > 0) {
-        const { error: expError } = await supabase.from("experience").insert(experience.map((exp) => ({
-          ...exp,
-          resume_id: id
-        })))
+        const { error: expError } = await supabase
+          .from("experience")
+          .insert(
+            experience.map((exp) => ({
+              resume_id: id,
+              job_title: exp.jobTitle,
+              company: exp.company,
+              start_date: formatMonthToDate(exp.startDate),
+              end_date: formatMonthToDate(exp.endDate),
+              description: exp.description,
+            }))
+          );
 
-        if (expError) throw expError;
+        if (expError) {
+          console.error("❌ Supabase resume upsert error:", expError);
+          throw expError;
+        }
       }
+
 
       if (education.length > 0) {
         const { error: eduError } = await supabase.from("education").insert(education.map((edu) => ({
-          ...edu,
-          resume_id: id
+          resume_id: id,
+          degree: edu.degree,
+          institution: edu.institution,
+          notes: edu.notes,
+          start_date: formatMonthToDate(edu.startDate),
+          end_date: formatMonthToDate(edu.endDate),
         })))
 
-        if (eduError) throw eduError;
+        if (eduError) {
+          console.error("❌ Supabase resume upsert error:", eduError);
+          throw eduError;
+        }
       }
 
       if (socialLinks.length > 0) {
         const { error: socErr } = await supabase
           .from("social_links")
           .insert(socialLinks.map((s) => ({ ...s, resume_id: id })));
-        if (socErr) throw socErr;
+        if (socErr) {
+          console.error("❌ Supabase resume upsert error:", socErr);
+          throw socErr;
+        }
       }
 
       alert("✅ Resume saved successfully!");
-    } catch (error) {
-
-      console.error("❌ Error saving resume:", error);
+    } catch (error: any) {
+      console.error("❌ Error saving resume:", error?.message || error || "Unknown error");
       alert("❌ Failed to save resume. Check console for errors.");
     }
 

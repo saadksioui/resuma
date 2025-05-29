@@ -43,7 +43,7 @@ const ResumePreview: React.FC = () => {
           {/* Header */}
           <div className={`px-6 py-8 ${themeClasses.header}`}>
             <h1 className={`text-2xl font-bold ${themeClasses.heading}`}>
-              {resumeData.fullName || 'Your Name'}
+              {resumeData.full_name || 'Your Name'}
             </h1>
             <p className={`text-lg mt-1 ${themeClasses.text}`}>
               {resumeData.title || 'Professional Title'}

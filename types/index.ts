@@ -29,7 +29,7 @@ export interface ResumeData {
   id: string;
   userId: string; // FK to Supabase auth.users
   slug: string;
-  fullName: string;
+  full_name: string;
   title: string;
   bio: string;
   email: string;
