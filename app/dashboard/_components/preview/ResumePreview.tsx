@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Briefcase, GraduationCap, Mail, Phone, MapPin } from 'lucide-react';
+import { Briefcase, GraduationCap, Mail, Phone, MapPin, Linkedin, Github, Instagram, Facebook, Globe } from 'lucide-react';
 import PreviewControls from './PreviewControls';
 import { useResume } from '@/context/ResumeContext';
 
@@ -33,6 +33,22 @@ const ResumePreview: React.FC = () => {
   };
 
   const themeClasses = getThemeClasses();
+
+  const getPlatformIcon = (platform: string) => {
+    const normalizedPlatform = platform.toLowerCase();
+
+    if (normalizedPlatform.includes('linkedin')) {
+      return <Linkedin className="h-4 w-4 text-blue-600" />;
+    } else if (normalizedPlatform.includes('github')) {
+      return <Github className="h-4 w-4 text-gray-800" />;
+    } else if (normalizedPlatform.includes('instagram')) {
+      return <Instagram className="h-4 w-4 text-gray-800" />;
+    } else if (normalizedPlatform.includes('facebook')) {
+      return <Facebook className="h-4 w-4 text-gray-800" />;
+    } else {
+      return <Globe className="h-4 w-4 text-green-600" />;
+    }
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -160,7 +176,8 @@ const ResumePreview: React.FC = () => {
                     rel="noopener noreferrer"
                     className={`text-xs underline ${themeClasses.subheading}`}
                   >
-                    {link.type || 'Link'}
+
+                    {(link.type ? link.type.charAt(0).toUpperCase() + link.type.slice(1) : 'Link')}
                   </a>
                 ))}
               </div>

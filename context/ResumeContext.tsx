@@ -327,7 +327,11 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       if (socialLinks.length > 0) {
         const { error: socErr } = await supabase
           .from("social_links")
-          .insert(socialLinks.map((s) => ({ ...s, resume_id: id })));
+          .insert(socialLinks.map((s) => ({
+            resume_id: id,
+            type: s.type,
+            url: s.url
+          })));
         if (socErr) {
           console.error("❌ Supabase resume upsert error:", socErr);
           throw socErr;
