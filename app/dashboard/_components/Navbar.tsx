@@ -44,12 +44,6 @@ const Navbar: React.FC = async () => {
               <span className="text-blue-600 text-xs truncate">resuma.io/multiversal</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="#" className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-              <Settings className="h-4 w-4 mr-2 text-gray-500" />
-              <span>Settings</span>
-            </Link>
-          </DropdownMenuItem>
           <DropdownMenuItem className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
             <LogoutButton />
           </DropdownMenuItem>

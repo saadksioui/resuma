@@ -95,7 +95,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         };
 
         setResumeData(newResume);
-        setPublicLink(`https://resuma.me/${slug}`);
+        setPublicLink(`${process.env.NEXT_PUBLIC_LINK}/${slug}`);
         return;
       }
 
@@ -107,7 +107,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         socialLinks: data.social_links || [],
       });
 
-      setPublicLink(`https://resuma.me/${data.slug}`);
+      setPublicLink(`${process.env.NEXT_PUBLIC_LINK}${data.slug}`);
     };
 
     fetchResume();
