@@ -1,27 +1,212 @@
 "use client"
-import { ResumeData } from "@/types";
+import { ResumeData, ResumeTheme } from "@/types";
 import { createClient } from "@/utils/supabase/client";
-import { useSearchParams } from "next/navigation";
+import { Briefcase, GraduationCap, Mail, MapPin, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const ResumePage = () => {
-  const params = useSearchParams();
-  const slug = params.get('slug');
-  const [resume, setResume] = useState<ResumeData | null>(null)
+const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }) => {
+  const [resume, setResume] = useState<ResumeData>({
+    id: '',
+    userId: '',
+    slug: '',
+    createdAt: '',
+    updatedAt: '',
+    full_name: '',
+    title: '',
+    bio: '',
+    email: '',
+    phone: '',
+    city: '',
+    skills: [],
+    experience: [],
+    education: [],
+    socialLinks: [],
+  });
+
 
   const supabase = createClient();
 
+  interface ResumeExperience {
+    id: string;
+    jobTitle: string;
+    company: string;
+    startDate: string | null;
+    endDate: string | null;
+    description: string;
+  }
+
+
+
+
+
   useEffect(() => {
-    if (slug) {
-      fetch(`/api/resume/${slug}`)
-        .then(res => res.json())
-        .then(data => setResume(data))
+    const fetchResume = async () => {
+    if (!slug) return;
+
+    const { data, error } = await supabase.from("resumes").select("*, experience(*), education(*), social_links(*)").eq("slug", slug);
+
+    if (error) {
+      console.error("❌ Supabase fetch error:", error.message || error);
+      return;
     }
+
+    if (!data || data.length === 0) {
+      console.warn("⚠️ No resume found for this slug.");
+      return;
+    }
+
+    const resumeData = data[0];
+
+    setResume({
+      ...resumeData,
+      email: resumeData.email || resumeData.user?.email || "",
+      experience: resumeData.experience || [],
+      education: resumeData.education || [],
+      socialLinks: resumeData.social_links || [],
+    });
+  };
+
+  fetchResume();
   }, [slug])
 
+  console.log(resume.experience);
+
+
   return (
-    <div>
-      ResumePage
+    <div className="flex-grow overflow-y-auto p-6">
+      <div className={`max-w-2xl mx-auto shadow-lg rounded-lg overflow-hidden transition-colors duration-300 ${themeClasses.resume}`}>
+        {/* Header */}
+        <div className={`px-6 py-8 ${themeClasses.header}`}>
+          <h1 className={`text-2xl font-bold ${themeClasses.heading}`}>
+            {resume.full_name || 'Your Name'}
+          </h1>
+          <p className={`text-lg mt-1 ${themeClasses.text}`}>
+            {resume.title || 'Professional Title'}
+          </p>
+          <p className={`mt-2 text-sm ${themeClasses.text}`}>
+            {resume.bio || 'Your professional bio will appear here.'}
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
+              <Mail className="h-3 w-3 mr-1" />
+              <span>{resume.email}</span>
+            </div>
+            <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
+              <Phone className="h-3 w-3 mr-1" />
+              <span>{resume.phone}</span>
+            </div>
+            <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
+              <MapPin className="h-3 w-3 mr-1" />
+              <span>{resume.city}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Skills */}
+        <div className={`px-6 py-4 ${themeClasses.section}`}>
+          <h2 className={`text-sm font-bold mb-3 ${themeClasses.heading}`}>SKILLS</h2>
+          <div className="flex flex-wrap gap-2">
+            {resume.skills && resume.skills.length > 0 ? (
+              resume.skills.map((skill: string, index: number) => (
+                <span
+                  key={index}
+                  className={`px-2 py-1 rounded-full text-xs ${themeClasses.skill}`}
+                >
+                  {skill}
+                </span>
+              ))
+            ) : (
+              <p className={`text-xs italic ${themeClasses.text}`}>
+                No skills added
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Experience */}
+        <div className={`px-6 py-4 ${themeClasses.section}`}>
+          <h2 className={`text-sm font-bold mb-3 ${themeClasses.heading}`}>EXPERIENCE</h2>
+          {resume.experience && resume.experience.length > 0 ? (
+            <div className="space-y-4">
+              {resume.experience.map((exp: ResumeExperience) => (
+                <div key={exp.id} className="relative pl-6">
+                  <Briefcase className={`absolute left-0 top-0.5 h-4 w-4 ${themeClasses.text}`} />
+                  <div>
+                    <h3 className={`text-sm font-medium ${themeClasses.subheading}`}>
+                      {exp.jobTitle || 'Job Title'}
+                    </h3>
+                    <p className={`text-xs ${themeClasses.text}`}>
+                      {exp.company || 'Company'} | {exp.startDate || 'Start Date'} - {exp.endDate || 'Present'}
+                    </p>
+                    <p className={`mt-1 text-xs ${themeClasses.text}`}>
+                      {exp.description || 'Job description will appear here.'}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className={`text-xs italic ${themeClasses.text}`}>
+              No experience listed.
+            </p>
+          )}
+        </div>
+
+        {/* Education */}
+        <div className={`px-6 py-4 ${themeClasses.section}`}>
+          <h2 className={`text-sm font-bold mb-3 ${themeClasses.heading}`}>EDUCATION</h2>
+          {resume.education && resume.education.length > 0 ? (
+            <div className="space-y-4">
+              {resume.education.map((edu) => (
+                <div key={edu.id} className="relative pl-6">
+                  <GraduationCap className={`absolute left-0 top-0.5 h-4 w-4 ${themeClasses.text}`} />
+                  <div>
+                    <h3 className={`text-sm font-medium ${themeClasses.subheading}`}>
+                      {edu.degree || 'Degree'}
+                    </h3>
+                    <p className={`text-xs ${themeClasses.text}`}>
+                      {edu.institution || 'Institution'} | {edu.startDate || 'Start Date'} - {edu.endDate || 'End Date'}
+                    </p>
+                    <p className={`mt-1 text-xs ${themeClasses.text}`}>
+                      {edu.notes || 'Additional notes will appear here.'}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className={`text-xs italic ${themeClasses.text}`}>
+              No education listed.
+            </p>
+          )}
+        </div>
+
+        {/* Social Links */}
+        <div className="px-6 py-4">
+          <h2 className={`text-sm font-bold mb-3 ${themeClasses.heading}`}>LINKS</h2>
+          {resume.socialLinks && resume.socialLinks.length > 0 ? (
+            <div className="flex flex-wrap gap-3">
+              {resume.socialLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.url || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-xs underline ${themeClasses.subheading}`}
+                >
+
+                  {(link.type ? link.type.charAt(0).toUpperCase() + link.type.slice(1) : 'Link')}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className={`text-xs italic ${themeClasses.text}`}>
+              No social links listed.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   )
 };

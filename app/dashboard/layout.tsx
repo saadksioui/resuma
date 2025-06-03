@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Navbar from "./_components/Navbar";
 import { ResumeProvider } from "@/context/ResumeContext";
+import Navbar from "./_components/Navbar";
 
 const DashboardLayout = ({
   children,
