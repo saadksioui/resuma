@@ -26,7 +26,7 @@ const Header = ({ user }: HeaderProps) => {
   }, []);
 
   return (
-    <header className={`${isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"}`}>
+    <header className={`w-3/4 mx-auto ${isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"}`}>
       <div className="container flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image src="/resuma-logo.svg" alt="Logo" width={150} height={150} />
