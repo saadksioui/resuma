@@ -4,6 +4,7 @@ import ResumePage from "./ResumePage";
 import { ResumeTheme } from "@/types";
 import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import Link from "next/link";
 
 const Page = () => {
   const [theme, setTheme] = useState<ResumeTheme>('light');
@@ -18,6 +19,7 @@ const Page = () => {
   const getThemeClasses = () => {
     if (theme === 'light') {
       return {
+        bg: 'bg-gray-100',
         resume: 'bg-white text-gray-800',
         header: 'bg-gray-100 text-gray-900',
         section: 'border-b border-gray-200',
@@ -28,13 +30,14 @@ const Page = () => {
       };
     } else {
       return {
-        resume: 'bg-gray-900 text-gray-100',
-        header: 'bg-gray-800 text-white',
-        section: 'border-b border-gray-700',
+        bg: 'bg-[#0e0e0e]',
+        resume: 'bg-[#181818] text-gray-100',
+        header: 'bg-[#222222] text-white',
+        section: 'border-b border-[#333]',
         heading: 'text-white',
         subheading: 'text-gray-300',
         text: 'text-gray-400',
-        skill: 'bg-gray-700 text-gray-100',
+        skill: 'bg-[#2f2f2f] text-gray-100',
       };
     }
   };
@@ -59,7 +62,10 @@ const Page = () => {
           )}
         </button>
       </div>
-      <div className="flex min-h-svh w-full items-center justify-center">
+      <div className="absolute bottom-4 right-4 text-sm text-gray-500">
+        created by <Link href={'https://resuma.io'} target="_blank"><span className="font-bold text-primary">Resuma</span></Link>
+      </div>
+      <div className={`${themeClasses.bg} transition-colors duration-300 flex min-h-svh w-full items-center justify-center`}>
 
         <ResumePage slug={slug} themeClasses={themeClasses} />
       </div>

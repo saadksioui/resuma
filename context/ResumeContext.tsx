@@ -80,22 +80,45 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         return;
       }
 
-      if (!data) {
-        const newId = uuidv4();
-        const slug = user.user_metadata.name?.toLowerCase().replace(/\s+/g, "-") || "my-resume";
+      if (!data || data.length === 0) {
+        const baseSlug = user.user_metadata.name?.toLowerCase().replace(/\s+/g, "-") || "my-resume";
 
+        // Check if the slug already exists for another user
+        const { data: existingSlugs, error: slugError } = await supabase
+          .from("resumes")
+          .select("slug")
+          .ilike("slug", `${baseSlug}%`);
+
+        if (slugError) {
+          console.error("❌ Error checking slug:", slugError.message);
+          return;
+        }
+
+        // Create a unique slug if necessary
+        let finalSlug = baseSlug;
+        if (existingSlugs && existingSlugs.length > 0) {
+          let counter = 1;
+          const slugSet = new Set(existingSlugs.map((item) => item.slug));
+          while (slugSet.has(`${baseSlug}-${counter}`)) {
+            counter++;
+          }
+          finalSlug = `${baseSlug}-${counter}`;
+        }
+
+        // Generate new resume object
+        const newId = uuidv4();
         const newResume = {
           ...defaultResumeData,
           id: newId,
           userId: user.id,
-          slug,
+          slug: finalSlug,
           email: user.email || "",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         };
 
         setResumeData(newResume);
-        setPublicLink(`${process.env.NEXT_PUBLIC_LINK}/${slug}`);
+        setPublicLink(`${process.env.NEXT_PUBLIC_LINK}/${finalSlug}`);
         return;
       }
 
