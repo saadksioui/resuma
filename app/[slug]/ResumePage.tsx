@@ -2,6 +2,7 @@
 import { ResumeData, ResumeTheme } from "@/types";
 import { createClient } from "@/utils/supabase/client";
 import { Briefcase, GraduationCap, Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }) => {
@@ -78,19 +79,19 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
         {/* Header */}
         <div className={`px-6 py-8 ${themeClasses.header}`}>
           <h1 className={`text-2xl font-bold ${themeClasses.heading}`}>
-            {resume.full_name || 'Your Name'}
+            {resume.full_name}
           </h1>
           <p className={`text-lg mt-1 ${themeClasses.text}`}>
-            {resume.title || 'Professional Title'}
+            {resume.title}
           </p>
           <p className={`mt-2 text-sm ${themeClasses.text}`}>
-            {resume.bio || 'Your professional bio will appear here.'}
+            {resume.bio}
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
               <Mail className="h-3 w-3 mr-1" />
-              <span>{resume.email}</span>
+              <Link href={`mailto:${resume.email}`} className="hover:underline"><span>{resume.email}</span></Link>
             </div>
             <div className={`inline-flex items-center text-xs ${themeClasses.text}`}>
               <Phone className="h-3 w-3 mr-1" />
@@ -134,13 +135,13 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
                   <Briefcase className={`absolute left-0 top-0.5 h-4 w-4 ${themeClasses.text}`} />
                   <div>
                     <h3 className={`text-sm font-medium ${themeClasses.subheading}`}>
-                      {exp.jobTitle || 'Job Title'}
+                      {exp.jobTitle}
                     </h3>
                     <p className={`text-xs ${themeClasses.text}`}>
-                      {exp.company || 'Company'} | {exp.startDate || 'Start Date'} - {exp.endDate || 'Present'}
+                      {exp.company} | {exp.startDate} - {exp.endDate || 'Present'}
                     </p>
                     <p className={`mt-1 text-xs ${themeClasses.text}`}>
-                      {exp.description || 'Job description will appear here.'}
+                      {exp.description}
                     </p>
                   </div>
                 </div>
@@ -163,13 +164,13 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
                   <GraduationCap className={`absolute left-0 top-0.5 h-4 w-4 ${themeClasses.text}`} />
                   <div>
                     <h3 className={`text-sm font-medium ${themeClasses.subheading}`}>
-                      {edu.degree || 'Degree'}
+                      {edu.degree}
                     </h3>
                     <p className={`text-xs ${themeClasses.text}`}>
-                      {edu.institution || 'Institution'} | {edu.startDate || 'Start Date'} - {edu.endDate || 'End Date'}
+                      {edu.institution} | {edu.startDate} - {edu.endDate}
                     </p>
                     <p className={`mt-1 text-xs ${themeClasses.text}`}>
-                      {edu.notes || 'Additional notes will appear here.'}
+                      {edu.notes}
                     </p>
                   </div>
                 </div>
