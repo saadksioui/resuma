@@ -189,7 +189,7 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
           {resume.socialLinks && resume.socialLinks.length > 0 ? (
             <div className="flex flex-wrap gap-3">
               {resume.socialLinks.map((link) => (
-                <a
+                <Link
                   key={link.id}
                   href={link.url || '#'}
                   target="_blank"
@@ -198,7 +198,7 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
                 >
 
                   {(link.type ? link.type.charAt(0).toUpperCase() + link.type.slice(1) : 'Link')}
-                </a>
+                </Link>
               ))}
             </div>
           ) : (

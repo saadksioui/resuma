@@ -15,7 +15,19 @@ import Image from 'next/image';
 
 const Navbar: React.FC = async () => {
   const supabase = await createClient()
-  const { data, error } = await supabase.auth.getUser()
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+
+  let resumeData = null;
+  let resumeError = null;
+  if (userData.user) {
+    const { data, error } = await supabase
+      .from("resumes")
+      .select("slug")
+      .eq("user_id", userData.user.id)
+      .single();
+    resumeData = data;
+    resumeError = error;
+  }
 
 
   return (
@@ -27,21 +39,21 @@ const Navbar: React.FC = async () => {
       <DropdownMenu>
         <DropdownMenuTrigger className='flex items-center gap-2 cursor-pointer'>
           <UserCircle className="h-6 w-6" />
-          <span className="hidden sm:inline">{data.user?.user_metadata.name}</span>
+          <span className="hidden sm:inline">{userData.user?.user_metadata.name}</span>
           <ChevronDown className="h-4 w-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>
             <div className="px-4 py-2 border-b border-gray-100">
-              <p className="text-sm font-medium text-gray-900">{data.user?.user_metadata.name}</p>
-              <p className="text-xs text-gray-500">{data.user?.email}</p>
+              <p className="text-sm font-medium text-gray-900">{userData.user?.user_metadata.name}</p>
+              <p className="text-xs text-gray-500">{userData.user?.email}</p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href="#" className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link href={`${process.env.NEXT_PUBLIC_LINK}/${resumeData?.slug}`} target='_blank' className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               <span className="text-xs text-gray-500 mr-2">Your public link:</span>
-              <span className="text-blue-600 text-xs truncate">resuma.io/multiversal</span>
+              <span className="text-blue-600 text-xs truncate">{`${process.env.NEXT_PUBLIC_LINK}/${resumeData?.slug}`}</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
