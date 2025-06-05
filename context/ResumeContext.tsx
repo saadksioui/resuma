@@ -81,44 +81,22 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       }
 
       if (!data || data.length === 0) {
-        const baseSlug = user.user_metadata.name?.toLowerCase().replace(/\s+/g, "-") || "my-resume";
+        const baseSlug = uuidv4();
 
-        // Check if the slug already exists for another user
-        const { data: existingSlugs, error: slugError } = await supabase
-          .from("resumes")
-          .select("slug")
-          .ilike("slug", `${baseSlug}%`);
 
-        if (slugError) {
-          console.error("❌ Error checking slug:", slugError.message);
-          return;
-        }
-
-        // Create a unique slug if necessary
-        let finalSlug = baseSlug;
-        if (existingSlugs && existingSlugs.length > 0) {
-          let counter = 1;
-          const slugSet = new Set(existingSlugs.map((item) => item.slug));
-          while (slugSet.has(`${baseSlug}-${counter}`)) {
-            counter++;
-          }
-          finalSlug = `${baseSlug}-${counter}`;
-        }
-
-        // Generate new resume object
         const newId = uuidv4();
         const newResume = {
           ...defaultResumeData,
           id: newId,
           userId: user.id,
-          slug: finalSlug,
+          slug: baseSlug,
           email: user.email || "",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         };
 
         setResumeData(newResume);
-        setPublicLink(`${process.env.NEXT_PUBLIC_LINK}/${finalSlug}`);
+        setPublicLink(`${process.env.NEXT_PUBLIC_LINK}resume/${baseSlug}`);
         return;
       }
 
@@ -130,7 +108,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         socialLinks: data.social_links || [],
       });
 
-      setPublicLink(`${process.env.NEXT_PUBLIC_LINK}${data.slug}`);
+      setPublicLink(`${process.env.NEXT_PUBLIC_LINK}resume/${data.slug}`);
     };
 
     fetchResume();
@@ -293,7 +271,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         .upsert({
           id: resumeData.id || uuidv4(),
           user_id: userId,
-          slug: full_name?.trim().toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || uuidv4(),
+          slug: resumeData.slug,
           full_name: full_name,
           title,
           bio,

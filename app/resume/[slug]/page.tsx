@@ -16,6 +16,7 @@ const Page = () => {
     : slugParam ?? "";
   console.log(slug);
 
+
   const getThemeClasses = () => {
     if (theme === 'light') {
       return {
@@ -47,7 +48,7 @@ const Page = () => {
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
-  
+
 
   return (
     <>

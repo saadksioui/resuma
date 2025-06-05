@@ -15,13 +15,13 @@ const PersonalInfoSection = () => {
 
       <div className="space-y-4">
         <div>
-          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 mb-1">
             Full Name
           </label>
           <input
             type="text"
-            id="fullName"
-            name="fullName"
+            id="full_name"
+            name="full_name"
             value={resumeData.full_name || ""}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

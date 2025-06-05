@@ -147,7 +147,7 @@ const ResumePreview: React.FC = () => {
                         {edu.degree || 'Degree'}
                       </h3>
                       <p className={`text-xs ${themeClasses.text}`}>
-                        {edu.institution || 'Institution'} | {edu.startDate || 'Start Date'} - {edu.endDate || 'End Date'}
+                        {edu.institution || 'Institution'} | {edu.startDate || 'Start Date'} - {edu.endDate || 'Present'}
                       </p>
                       <p className={`mt-1 text-xs ${themeClasses.text}`}>
                         {edu.notes || 'Additional notes will appear here.'}

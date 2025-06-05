@@ -51,9 +51,9 @@ const Navbar: React.FC = async () => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href={`${process.env.NEXT_PUBLIC_LINK}/${resumeData?.slug}`} target='_blank' className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link href={`${process.env.NEXT_PUBLIC_LINK}resume/${resumeData?.slug}`} target='_blank' className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               <span className="text-xs text-gray-500 mr-2">Your public link:</span>
-              <span className="text-blue-600 text-xs truncate">{`${process.env.NEXT_PUBLIC_LINK}/${resumeData?.slug}`}</span>
+              <span className="text-blue-600 text-xs truncate">{`${userData.user?.user_metadata.name}'s Resume`}</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="w-full flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

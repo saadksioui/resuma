@@ -72,7 +72,7 @@ const Header = ({ user }: HeaderProps) => {
                   <Link href="/login" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
                     <Button variant={"outline"}>Sign In</Button>
                   </Link>
-                  <Link href="/register" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
+                  <Link href="/sign-up" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
                     <Button>Get Started</Button>
                   </Link>
                 </div>
@@ -127,7 +127,7 @@ const Header = ({ user }: HeaderProps) => {
                       <Link href="/login" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
                         <Button variant={"outline"}>Sign In</Button>
                       </Link>
-                      <Link href="/register" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
+                      <Link href="/sign-up" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
                         <Button>Get Started</Button>
                       </Link>
                     </div>
