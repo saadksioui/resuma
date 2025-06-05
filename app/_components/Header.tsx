@@ -26,7 +26,7 @@ const Header = ({ user }: HeaderProps) => {
   }, []);
 
   return (
-    <header className={`w-3/4 mx-auto ${isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"}`}>
+    <header className={`w-3/4 mx-auto py-5`}>
       <div className="container flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image src="/resuma-logo.svg" alt="Logo" width={150} height={150} />
@@ -48,18 +48,18 @@ const Header = ({ user }: HeaderProps) => {
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <>
-            <a href="#features" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
+            <Link href="#features" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
               Features
-            </a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
+            </Link>
+            <Link href="#how-it-works" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
               How It Works
-            </a>
-            <a href="#testimonials" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
+            </Link>
+            {/* <Link href="#testimonials" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
               Testimonials
-            </a>
-            <a href="#pricing" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
+            </Link> */}
+            <Link href="#pricing" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
               Pricing
-            </a>
+            </Link>
           </>
           <>
             {
@@ -83,38 +83,38 @@ const Header = ({ user }: HeaderProps) => {
 
         {/* Mobile navigation */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white shadow-md py-4 md:hidden">
-            <div className="container flex flex-col space-y-4">
+          <div className="absolute top-16 left-0 right-0 z-50 bg-white shadow-md py-4 md:hidden">
+            <div className="container w-3/4 mx-auto flex flex-col space-y-4">
 
               <>
-                <a
+                <Link
                   href="#features"
                   className="text-gray-700 hover:text-blue-500 font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Features
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#how-it-works"
                   className="text-gray-700 hover:text-blue-500 font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   How It Works
-                </a>
-                <a
+                </Link>
+                {/* <Link
                   href="#testimonials"
                   className="text-gray-700 hover:text-blue-500 font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Testimonials
-                </a>
-                <a
+                </Link> */}
+                <Link
                   href="#pricing"
                   className="text-gray-700 hover:text-blue-500 font-medium transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Pricing
-                </a>
+                </Link>
               </>
               <>
                 {
@@ -123,7 +123,7 @@ const Header = ({ user }: HeaderProps) => {
                       Dashboard
                     </Link>
                   ) : (
-                    <div className="flex flex-col space-y-4">
+                    <div className="flex flex-row space md:flex-col md:space-y-4">
                       <Link href="/login" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
                         <Button variant={"outline"}>Sign In</Button>
                       </Link>

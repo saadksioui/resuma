@@ -10,7 +10,7 @@ const Pricing: React.FC = () => {
   });
 
   return (
-    <section id="pricing" className="section mt-20">
+    <section id="pricing" className="section my-20 scroll-mt-16">
       <div className="container">
         <div
           ref={ref}

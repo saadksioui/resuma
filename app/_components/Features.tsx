@@ -46,7 +46,7 @@ const Features: React.FC = () => {
   });
 
   return (
-    <section id="features" className="section relative mt-20">
+    <section id="features" className="section relative mt-20 scroll-mt-16">
       <div className="container">
         <div
           ref={ref}

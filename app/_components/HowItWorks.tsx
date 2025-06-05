@@ -55,7 +55,7 @@ const HowItWorks = ({ user }: HowItWorksProps) => {
   });
 
   return (
-    <section id="how-it-works" className="section mt-20">
+    <section id="how-it-works" className="section mt-20 scroll-mt-16">
       <div className="container">
         <div
           ref={ref}
