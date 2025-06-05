@@ -1,10 +1,10 @@
 export interface Experience {
   id: string;
   resumeId: string; // FK to resume
-  jobTitle: string;
+  job_title: string;
   company: string;
-  startDate: string; // ISO Date string
-  endDate: string | null; // nullable for "Present"
+  start_date: string; // ISO Date string
+  end_date: string | null; // nullable for "Present"
   description: string;
 }
 
@@ -13,8 +13,8 @@ export interface Education {
   resumeId: string; // FK to resume
   degree: string;
   institution: string;
-  startDate: string;
-  endDate: string;
+  start_date: string;
+  end_date: string;
   notes: string;
 }
 

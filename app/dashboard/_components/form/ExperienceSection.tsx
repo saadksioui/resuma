@@ -39,8 +39,8 @@ const ExperienceSection = () => {
             <div key={exp.id} className="border border-gray-200 rounded-md p-4">
               <div className="flex justify-between items-start mb-3">
                 <h3 className="text-sm font-medium text-gray-700">
-                  {exp.jobTitle || exp.company ? (
-                    `${exp.jobTitle} ${exp.company ? 'at ' + exp.company : ''}`
+                  {exp.job_title || exp.company ? (
+                    `${exp.job_title} ${exp.company ? 'at ' + exp.company : ''}`
                   ) : (
                     'New Experience'
                   )}
@@ -60,8 +60,8 @@ const ExperienceSection = () => {
                   </label>
                   <input
                     type="text"
-                    value={exp.jobTitle}
-                    onChange={(e) => handleChange(exp.id, 'jobTitle', e.target.value)}
+                    value={exp.job_title}
+                    onChange={(e) => handleChange(exp.id, 'job_title', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Software Developer"
                   />
@@ -88,8 +88,8 @@ const ExperienceSection = () => {
                   </label>
                   <input
                     type="month"
-                    value={exp.startDate || ''}
-                    onChange={(e) => handleChange(exp.id, 'startDate', e.target.value)}
+                    value={exp.start_date || ''}
+                    onChange={(e) => handleChange(exp.id, 'start_date', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
@@ -100,8 +100,8 @@ const ExperienceSection = () => {
                   </label>
                   <input
                     type="month"
-                    value={exp.endDate || ""}
-                    onChange={(e) => handleChange(exp.id, 'endDate', e.target.value)}
+                    value={exp.end_date || ""}
+                    onChange={(e) => handleChange(exp.id, 'end_date', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>

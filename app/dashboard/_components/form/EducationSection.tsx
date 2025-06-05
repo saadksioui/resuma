@@ -88,8 +88,8 @@ const EducationSection = () => {
                   </label>
                   <input
                     type="month"
-                    value={edu.startDate || ''}
-                    onChange={(e) => handleChange(edu.id, 'startDate', e.target.value)}
+                    value={edu.start_date || ''}
+                    onChange={(e) => handleChange(edu.id, 'start_date', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
@@ -100,8 +100,8 @@ const EducationSection = () => {
                   </label>
                   <input
                     type="month"
-                    value={edu.endDate || ''}
-                    onChange={(e) => handleChange(edu.id, 'endDate', e.target.value)}
+                    value={edu.end_date || ''}
+                    onChange={(e) => handleChange(edu.id, 'end_date', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>

@@ -147,10 +147,10 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         {
           id: uuidv4(),
           resumeId: prev.id,
-          jobTitle: "",
+          job_title: "",
           company: "",
-          startDate: "",
-          endDate: "",
+          start_date: "",
+          end_date: "",
           description: "",
         },
       ],
@@ -183,8 +183,8 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           resumeId: prev.id,
           institution: "",
           degree: "",
-          startDate: "",
-          endDate: "",
+          start_date: "",
+          end_date: "",
           notes: "",
         },
       ],
@@ -308,10 +308,10 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           .insert(
             experience.map((exp) => ({
               resume_id: id,
-              job_title: exp.jobTitle,
+              job_title: exp.job_title,
               company: exp.company,
-              start_date: formatMonthToDate(exp.startDate),
-              end_date: formatMonthToDate(exp.endDate),
+              start_date: formatMonthToDate(exp.start_date),
+              end_date: formatMonthToDate(exp.end_date),
               description: exp.description,
             }))
           );
@@ -329,8 +329,8 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           degree: edu.degree,
           institution: edu.institution,
           notes: edu.notes,
-          start_date: formatMonthToDate(edu.startDate),
-          end_date: formatMonthToDate(edu.endDate),
+          start_date: formatMonthToDate(edu.start_date),
+          end_date: formatMonthToDate(edu.end_date),
         })))
 
         if (eduError) {

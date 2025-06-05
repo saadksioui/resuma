@@ -29,10 +29,10 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
 
   interface ResumeExperience {
     id: string;
-    jobTitle: string;
+    job_title: string;
     company: string;
-    startDate: string | null;
-    endDate: string | null;
+    start_date: string | null;
+    end_date: string | null;
     description: string;
   }
 
@@ -135,10 +135,10 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
                   <Briefcase className={`absolute left-0 top-0.5 h-4 w-4 ${themeClasses.text}`} />
                   <div>
                     <h3 className={`text-sm font-medium ${themeClasses.subheading}`}>
-                      {exp.jobTitle}
+                      {exp.job_title}
                     </h3>
                     <p className={`text-xs ${themeClasses.text}`}>
-                      {exp.company} | {exp.startDate} - {exp.endDate || 'Present'}
+                      {exp.company} | {exp.start_date} - {exp.end_date || 'Present'}
                     </p>
                     <p className={`mt-1 text-xs ${themeClasses.text}`}>
                       {exp.description}
@@ -167,7 +167,7 @@ const ResumePage = ({ slug, themeClasses } : { slug: string, themeClasses: any }
                       {edu.degree}
                     </h3>
                     <p className={`text-xs ${themeClasses.text}`}>
-                      {edu.institution} | {edu.startDate} - {edu.endDate}
+                      {edu.institution} | {edu.start_date} - {edu.end_date}
                     </p>
                     <p className={`mt-1 text-xs ${themeClasses.text}`}>
                       {edu.notes}

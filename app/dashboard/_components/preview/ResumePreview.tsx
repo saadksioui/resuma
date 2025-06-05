@@ -115,10 +115,10 @@ const ResumePreview: React.FC = () => {
                     <Briefcase className={`absolute left-0 top-0.5 h-4 w-4 ${themeClasses.text}`} />
                     <div>
                       <h3 className={`text-sm font-medium ${themeClasses.subheading}`}>
-                        {exp.jobTitle || 'Job Title'}
+                        {exp.job_title || 'Job Title'}
                       </h3>
                       <p className={`text-xs ${themeClasses.text}`}>
-                        {exp.company || 'Company'} | {exp.startDate || 'Start Date'} - {exp.endDate || 'Present'}
+                        {exp.company || 'Company'} | {exp.start_date || 'Start Date'} - {exp.end_date || 'Present'}
                       </p>
                       <p className={`mt-1 text-xs ${themeClasses.text}`}>
                         {exp.description || 'Job description will appear here.'}
@@ -147,7 +147,7 @@ const ResumePreview: React.FC = () => {
                         {edu.degree || 'Degree'}
                       </h3>
                       <p className={`text-xs ${themeClasses.text}`}>
-                        {edu.institution || 'Institution'} | {edu.startDate || 'Start Date'} - {edu.endDate || 'Present'}
+                        {edu.institution || 'Institution'} | {edu.start_date || 'Start Date'} - {edu.end_date || 'Present'}
                       </p>
                       <p className={`mt-1 text-xs ${themeClasses.text}`}>
                         {edu.notes || 'Additional notes will appear here.'}
