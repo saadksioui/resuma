@@ -7,6 +7,7 @@ import HowItWorks from "./_components/HowItWorks";
 import Pricing from "./_components/Pricing";
 import Testimonials from "./_components/Testimonials";
 import Features from "./_components/Features";
+import TestimonialFAB from "./_components/TestimonialFAB";
 
 const Home = async () => {
   const supabase = await createClient()
@@ -25,6 +26,7 @@ const Home = async () => {
         <Pricing />
       </main>
       <Footer />
+      <TestimonialFAB />
     </div>
   )
 };
