@@ -60,7 +60,7 @@ const ExperienceSection = () => {
                   </label>
                   <input
                     type="text"
-                    value={exp.job_title}
+                    value={exp.job_title || ''}
                     onChange={(e) => handleChange(exp.id, 'job_title', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Software Developer"
@@ -73,7 +73,7 @@ const ExperienceSection = () => {
                   </label>
                   <input
                     type="text"
-                    value={exp.company}
+                    value={exp.company || ''}
                     onChange={(e) => handleChange(exp.id, 'company', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Company Name"
@@ -112,7 +112,7 @@ const ExperienceSection = () => {
                   Description
                 </label>
                 <textarea
-                  value={exp.description}
+                  value={exp.description || ''}
                   onChange={(e) => handleChange(exp.id, 'description', e.target.value)}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"

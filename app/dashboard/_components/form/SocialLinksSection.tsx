@@ -69,7 +69,7 @@ const SocialLinksSection = () => {
 
                 <input
                   type="url"
-                  value={link.url}
+                  value={link.url || ''}
                   onChange={(e) => handleChange(link.id, 'url', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="URL"

@@ -60,7 +60,7 @@ const EducationSection = () => {
                   </label>
                   <input
                     type="text"
-                    value={edu.degree}
+                    value={edu.degree || ''}
                     onChange={(e) => handleChange(edu.id, 'degree', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="B.S. Computer Science"
@@ -73,7 +73,7 @@ const EducationSection = () => {
                   </label>
                   <input
                     type="text"
-                    value={edu.institution}
+                    value={edu.institution || ''}
                     onChange={(e) => handleChange(edu.id, 'institution', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="University Name"
@@ -112,7 +112,7 @@ const EducationSection = () => {
                   Notes
                 </label>
                 <textarea
-                  value={edu.notes}
+                  value={edu.notes || ''}
                   onChange={(e) => handleChange(edu.id, 'notes', e.target.value)}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
