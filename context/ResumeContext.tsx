@@ -68,23 +68,22 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         return;
       }
 
-
       const { data, error } = await supabase
         .from("resumes")
         .select("*, experience(*), education(*), social_links(*)")
         .eq("user_id", user.id)
-        .single();
+        .maybeSingle(); // 👈 this won't throw if not found
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
+        // only log if it's not "No rows found"
         console.error("❌ Error fetching resume:", error.message || error);
         return;
       }
 
-      if (!data || data.length === 0) {
+      if (!data) {
         const baseSlug = uuidv4();
-
-
         const newId = uuidv4();
+
         const newResume = {
           ...defaultResumeData,
           id: newId,
@@ -97,6 +96,17 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
         setResumeData(newResume);
         setPublicLink(`${process.env.NEXT_PUBLIC_LINK}resume/${baseSlug}`);
+
+        await supabase.from("resumes").insert([{
+          id: newId,
+          user_id: user.id,
+          slug: baseSlug,
+          email: user.email || "",
+          full_name: "",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }]);
+
         return;
       }
 
