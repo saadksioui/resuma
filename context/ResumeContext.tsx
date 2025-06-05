@@ -276,6 +276,10 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 
     try {
+      if (!resumeData.slug) {
+        resumeData.slug = uuidv4();
+        setResumeData(prev => ({ ...prev, slug: resumeData.slug }));
+      }
       const { error: resumeError } = await supabase
         .from("resumes")
         .upsert({
