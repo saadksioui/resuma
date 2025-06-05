@@ -6,6 +6,7 @@ import Hero from "./_components/Hero";
 import HowItWorks from "./_components/HowItWorks";
 import Pricing from "./_components/Pricing";
 import Testimonials from "./_components/Testimonials";
+import Features from "./_components/Features";
 
 const Home = async () => {
   const supabase = await createClient()
@@ -18,8 +19,9 @@ const Home = async () => {
       <Header user={user}/>
       <main className="flex-grow pt-20 w-3/4 mx-auto">
         <Hero user={user}/>
-        <HowItWorks />
-        <Testimonials />
+        <Features />
+        <HowItWorks user={user} />
+        {/* <Testimonials /> */}
         <Pricing />
       </main>
       <Footer />
