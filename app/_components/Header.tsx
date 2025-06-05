@@ -65,7 +65,7 @@ const Header = ({ user }: HeaderProps) => {
             {
               user ? (
                 <Link href="/dashboard" className="text-gray-700 hover:text-blue-500 font-medium transition-colors">
-                  Dashboard
+                  <Button>Dashboard</Button>
                 </Link>
               ) : (
                 <div className="flex items-center space-x-4">
