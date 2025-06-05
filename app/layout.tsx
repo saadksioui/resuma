@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
+
 
 const interSans = Inter({
   variable: "--font-inter-sans",
@@ -56,6 +58,7 @@ export default function RootLayout({
         className={`${interSans.variable} antialiased`}
       >
           {children}
+          <Analytics />
       </body>
     </html>
   );
