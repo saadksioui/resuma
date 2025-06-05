@@ -44,7 +44,7 @@ const Pricing = ({ user }: { user: User | null }) => {
                 {[
                   'One professional resume',
                   'Custom shareable link',
-                  'Basic templates',
+                  /* 'Basic templates', */
                   'Real-time editor',
                   'Mobile-responsive design'
                 ].map((feature, index) => (
