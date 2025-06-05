@@ -103,6 +103,11 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           slug: baseSlug,
           email: user.email || "",
           full_name: "",
+          title: "",
+          bio: "",
+          phone: "",
+          city: "",
+          skills: [],
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         }]);
