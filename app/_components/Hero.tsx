@@ -1,6 +1,7 @@
 "use client"
 import { Button } from '@/components/ui/button';
 import { User } from '@supabase/supabase-js';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -45,10 +46,12 @@ const Hero = ({ user }: HeroProps) => {
           <div
             className={`${inView ? 'animate-slide-up' : 'opacity-0 translate-y-8'} transition-all duration-700 delay-300`}
           >
-            <div className="relative rounded-lg overflow-hidden shadow-2xl">
-              <img
-                src="https://images.pexels.com/photos/3759098/pexels-photo-3759098.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            <div className="relative rounded-lg overflow-hidden">
+              <Image
+                src="/hero-img.png"
                 alt="Resume preview"
+                width={1260}
+                height={750}
                 className="w-full h-auto"
               />
             </div>
