@@ -65,7 +65,7 @@ const Page = () => {
         </button>
       </div>
       <div className="absolute bottom-4 right-4 text-sm text-gray-500">
-        created by <Link href={'https://resuma.io'} target="_blank"><span className="font-bold text-primary">Resuma</span></Link>
+        created by <Link href={'https://resuma-murex.vercel.app/'} target="_blank"><span className="font-bold text-primary">Resuma</span></Link>
       </div>
       <div className={`${themeClasses.bg} transition-colors duration-300 flex min-h-svh w-full items-center justify-center`}>
 
