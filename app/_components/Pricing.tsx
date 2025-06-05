@@ -2,8 +2,11 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Check } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { User } from '@supabase/supabase-js';
 
-const Pricing: React.FC = () => {
+const Pricing = ({ user }: { user: User | null }) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -14,9 +17,8 @@ const Pricing: React.FC = () => {
       <div className="container">
         <div
           ref={ref}
-          className={`text-center max-w-3xl mx-auto mb-16 ${
-            inView ? 'animate-fade-in' : 'opacity-0'
-          }`}
+          className={`text-center max-w-3xl mx-auto mb-16 ${inView ? 'animate-fade-in' : 'opacity-0'
+            }`}
         >
           <h2 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
           <p className="text-lg text-gray-600">
@@ -26,9 +28,8 @@ const Pricing: React.FC = () => {
 
         <div className="max-w-lg mx-auto">
           <div
-            className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-700 delay-200 ${
-              inView ? 'animate-fade-in' : 'opacity-0 translate-y-8'
-            }`}
+            className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-700 delay-200 ${inView ? 'animate-fade-in' : 'opacity-0 translate-y-8'
+              }`}
           >
             <div className="bg-blue-500 p-6 text-white text-center">
               <h3 className="text-2xl font-bold">Free</h3>
@@ -54,10 +55,12 @@ const Pricing: React.FC = () => {
                 ))}
               </ul>
 
-              <div className="mt-8">
-                <a href="#" className="btn-primary w-full justify-center">
-                  Get Started
-                </a>
+              <div className="mt-8 flex items-center justify-center">
+                <Link href={user ? '/dashboard' : '/login'} className="text-xl">
+                  <Button>
+                    Get Started Now
+                  </Button>
+                </Link>
               </div>
 
               <p className="mt-6 text-center text-sm text-gray-500">

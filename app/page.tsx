@@ -23,7 +23,7 @@ const Home = async () => {
         <Features />
         <HowItWorks user={user} />
         {/* <Testimonials /> */}
-        <Pricing />
+        <Pricing user={user} />
       </main>
       <Footer />
       <TestimonialFAB />
