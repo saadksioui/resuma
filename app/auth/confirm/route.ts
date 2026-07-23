@@ -1,3 +1,4 @@
+import { getRedirectUrl } from '@/lib/auth-redirect'
 import { createClient } from '@/utils/supabase/server'
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { redirect } from 'next/navigation'
@@ -8,6 +9,7 @@ export async function GET(request: NextRequest) {
   const token_hash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
   const next = searchParams.get('next') ?? '/dashboard'
+  const origin = request.headers.get('origin')
 
   if (token_hash && type) {
     const supabase = await createClient()
@@ -17,14 +19,12 @@ export async function GET(request: NextRequest) {
       token_hash,
     })
     if (!error) {
-      // redirect user to specified redirect URL or root of app
-      redirect(next)
+      const destination = getRedirectUrl(next, origin)
+      redirect(destination)
     } else {
-      // redirect the user to an error page with some instructions
-      redirect(`/error?error=${error?.message}`)
+      redirect(`/error?error=${encodeURIComponent(error.message)}`)
     }
   }
 
-  // redirect the user to an error page with some instructions
-  redirect(`/error?error=No token hash or type`)
+  redirect(`/error?error=${encodeURIComponent('No token hash or type')}`)
 }

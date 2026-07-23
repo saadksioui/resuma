@@ -1,9 +1,10 @@
 'use client'
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { getRedirectUrl } from '@/lib/auth-redirect'
 import { createClient } from '@/utils/supabase/client'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { useState } from 'react'
 import { FileText, Mail } from 'lucide-react'
+import { useState } from 'react'
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState('')
@@ -20,7 +21,7 @@ export function ForgotPasswordForm() {
     try {
       // The url which will be included in the email. This URL needs to be configured in your redirect URLs in the Supabase dashboard at https://supabase.com/dashboard/project/_/auth/url-configuration
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_LINK}/update-password`,
+        redirectTo: getRedirectUrl('/update-password', window.location.origin),
       })
       if (error) throw error
       setSuccess(true)

@@ -1,6 +1,5 @@
 'use client'
 
-import { createClient } from '@/utils/supabase/client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,9 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { getRedirectUrl } from '@/lib/auth-redirect'
+import { createClient } from '@/utils/supabase/client'
+import { Lock } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Lock } from 'lucide-react'
 
 export function UpdatePasswordForm() {
   const [password, setPassword] = useState('')
@@ -28,8 +29,7 @@ export function UpdatePasswordForm() {
     try {
       const { error } = await supabase.auth.updateUser({ password })
       if (error) throw error
-      // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push('/dashboard')
+      router.push(getRedirectUrl('/dashboard', window.location.origin))
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {

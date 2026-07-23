@@ -1,10 +1,11 @@
 'use client'
 
+import { getRedirectUrl } from '@/lib/auth-redirect'
 import { createClient } from '@/utils/supabase/client'
+import { FileText, Lock, Mail, User } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { FileText, Lock, Mail, User } from 'lucide-react'
 
 export function SignUpForm() {
   const [name, setName] = useState('')
@@ -32,7 +33,7 @@ export function SignUpForm() {
         email,
         password,
         options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_LINK}/dashboard`,
+          emailRedirectTo: getRedirectUrl('/dashboard', window.location.origin),
           data: {
             name,
           },
